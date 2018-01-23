@@ -30,7 +30,7 @@ With this class instantiated, one can process time calculations with minutes and
 ```javascript
 const td = new TimeDuration(2, 30);
 console.log(td); // outputs "2:30", equivalent of td.toString()
-console.log(td + 0); // outputs 210 (int), equivalent of td.valueOf()
+console.log(td + 0); // outputs 210 (integer), equivalent of td.valueOf()
 console.log(td.toMinutes()); // outputs 210 just as above
 console.log(td.toHours(1)); // outputs 2.5 (float -the parameter tells the round precision)
 console.log(td.toObject()); // outputs an object { hours: 2, minutes: 30 }
@@ -56,8 +56,8 @@ Alternatively, we can do mathematical operations with TimeDurations
 ```javascript
 const td1 = new TimeDuration(1, 20);
 const td2 = new TimeDuration(1, 00);
-console.log(td1 + td2); // outputs "2:20"
-console.log(td1 - td2); // outputs "0:20"
+console.log(td1 + td2); // outputs 140 (integer)
+console.log(new TimeDuration(td1 - td2)); // outputs "0:20"
 ```
 
 ## Linting only

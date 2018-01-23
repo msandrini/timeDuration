@@ -12,3 +12,9 @@ env:
 script:
   - npm test
   - bash <(curl -s https://codecov.io/bash) || echo 'Codecov failed to upload'
+
+
+deploy:
+  provider: npm
+  email: "msandrinidesign@gmail.com"
+  api_key: "RDeRJX/LZyvftUNIOQmWzvZN+QwtM/gS6cmePb/bqaEGCdnIo49a3RlwDvFXuNBwNA5/SUHNwTgyHf7+djZEGeLS6wjtMWgrZbNWSsxlwFUPXsE2UntyxemhurePbj7WAexWWh3UmJaWxSLwQAR5RU+O9url3p2ceJu334Wvz0XWuLVeRB/K87vrqhzjn0YGhCzbWRj/2n9qqrM0tV1vGXaIFJvBgVlX/0EyDBRV2HdLiua06PJgr/DY9V2CdSx3p0qbC4N0mDMUhp0dGYHNzyKs98JneCrLdDB77KECvY4FreOHLY1T/piCejogE0sv60+kec2qc0hWqnKam+626+aMr/2G08j8xBZVoOHdRjSA/ito3cwSdmD61DKa/H3HZbQqo5AZ6iI1SHWEP5npYg35cfo6nHiE3NlvBiPdrNvb8a7OopF5gWEoq1YFwDRZ1lvlqj/wxDqHOMOIEB4qRtgnYhGm/4N04HTXEQAMqeXl74j+vLiJ/UFROj7a2FEujaYOSqqxwl34iI8nfPJpLm8UrK5x0TtdWEWzRkE+pzT3XlFTnqrz7hTBLrBqQCeuDIUwoLwtmgizTVcWUDMZ4AwUMQDRT0Cqv2kIZbEbAo0O9F/lrFUL4SvLRrmDdDiK4R/Lr1YJDBONDrb2h8pYzPJGs/q8sYVFoACkhmEPb3E="
