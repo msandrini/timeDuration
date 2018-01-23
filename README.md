@@ -5,6 +5,7 @@
 [![codecov](https://codecov.io/gh/msandrini/timeDuration/branch/master/graph/badge.svg)](https://codecov.io/gh/msandrini/timeDuration)
 [![Known Vulnerabilities](https://snyk.io/test/github/msandrini/timeduration/badge.svg?targetFile=package.json)](https://snyk.io/test/github/msandrini/timeduration?targetFile=package.json)
 [![Maintainability](https://api.codeclimate.com/v1/badges/1acb70e8ab867c9e94e0/maintainability)](https://codeclimate.com/github/msandrini/timeDuration/maintainability)
+[![npm version](https://badge.fury.io/js/time-duration.svg)](https://badge.fury.io/js/time-duration)
 
 
 Library to handle simple hour/minute times
