@@ -26,6 +26,16 @@
     "name": "Marcos Sandrini",
     "email": "msandrinidesign@gmail.com"
   },
+  "contributors": [
+    {
+      "name": "Everton Nikolas de Oliveira",
+      "email": "enikolas.oliveira@gmail.com"
+    },
+    {
+      "name": "Henrique Noronha Facioli",
+      "email": "henrique.facioli@students.ic.unicamp.br"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/msandrini/timeDuration/issues"

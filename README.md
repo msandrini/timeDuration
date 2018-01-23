@@ -31,9 +31,9 @@ With this class instantiated, one can process time calculations with minutes and
 ```javascript
 const td = new TimeDuration(2, 30);
 console.log(td + 0); // outputs 210 (integer)
-console.log(td.valueOf()); // outputs 210 (integer), same as above
+console.log(td.valueOf()); // outputs 210, same as above
+console.log(td.toMinutes()); // outputs 210, just as above
 console.log(td.toString()); // outputs "2:30"
-console.log(td.toMinutes()); // outputs 210 just as above
 console.log(td.toHours(1)); // outputs 2.5 (float -the parameter tells the round precision)
 console.log(td.toObject()); // outputs an object { hours: 2, minutes: 30 }
 ```
