@@ -1,14 +1,17 @@
 # timeDuration
 
 [![Build Status](https://travis-ci.org/msandrini/timeDuration.svg?branch=master)](https://travis-ci.org/msandrini/timeDuration)
+[![Greenkeeper badge](https://badges.greenkeeper.io/msandrini/timeDuration.svg)](https://greenkeeper.io/)
 [![codecov](https://codecov.io/gh/msandrini/timeDuration/branch/master/graph/badge.svg)](https://codecov.io/gh/msandrini/timeDuration)
 [![Known Vulnerabilities](https://snyk.io/test/github/msandrini/timeduration/badge.svg?targetFile=package.json)](https://snyk.io/test/github/msandrini/timeduration?targetFile=package.json)
+
 
 Library to handle simple hour/minute times
 
 ## installation
 
 `npm i time-duration` with `--save-dev` if desired
+
 
 ## usage
 
