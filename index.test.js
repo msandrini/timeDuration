@@ -102,11 +102,11 @@ describe('TimeDuration', () => {
 	describe('_normalize', () => {
 		const td = new TimeDuration();
 		it('should create a new TimeDuration', () => {
-			expect(td._normalize(102) instanceof TimeDuration).toBeTruthy();
+			expect(typeof td._normalize(102)).toEqual('number');
 		});
 		it('should return given TimeDuration', () => {
 			const td2 = new TimeDuration();
-			expect(td._normalize(td2)).toBe(td2);
+			expect(td._normalize(td2)).toBe(0);
 		});
 	});
 

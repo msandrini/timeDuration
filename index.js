@@ -1,28 +1,24 @@
 const MINUTES_PER_HOUR = 60;
+const TIME_SEPARATOR = ':';
 
-const _isValidNumber = (number, type) => {
-	if (Number.isNaN(Number(number))) {
-		throw new Error(`Invalid value of ${type}: ${number}`);
-	}
-	return true;
-};
+const _isValidNumber = number => !Number.isNaN(Number(number));
 
 const _objectToNumber = (obj) => {
-	if (_isValidNumber(obj.hours, 'hours') || _isValidNumber(obj.minutes, 'minutes')) {
+	if (_isValidNumber(obj.hours) && _isValidNumber(obj.minutes)) {
 		return (obj.hours * MINUTES_PER_HOUR) + obj.minutes;
 	}
-	return NaN;
+	throw new Error(`Cannot convert object ${JSON.stringify(obj)} to TimeDuration`);
 };
 
-const _stringToObject = (str, separator = ':') => {
+const _stringToObject = (str, separator = TIME_SEPARATOR) => {
 	const [hours, minutes] = str.split(separator);
-	if (_isValidNumber(hours, 'hours') || _isValidNumber(minutes, 'minutes')) {
+	if (_isValidNumber(hours) && _isValidNumber(minutes)) {
 		return {
 			hours: Number(hours),
 			minutes: Number(minutes)
 		};
 	}
-	return NaN;
+	throw new Error(`Cannot convert string "${str}" to TimeDuration`);
 };
 
 export default class TimeDuration {
@@ -30,17 +26,23 @@ export default class TimeDuration {
 	constructor(...args) {
 		this.time = 0;
 
-		const [firstValue, secondValue] = args;
-		const fistValueType = typeof firstValue;
+		const [firstValue] = args;
 
-		if (fistValueType === 'number' && args.length === 1) {
+		if (typeof firstValue === 'number' && args.length === 1) {
 			this.time = firstValue;
 
-		} else if (fistValueType === 'string' && args.length === 1 && firstValue.includes(':')) {
-			const timeObj = _stringToObject(firstValue, ':');
-			if (timeObj) {
-				this.time = _objectToNumber(timeObj);
-			}
+		} else {
+			this._firstConversionToTimeDuration(args);
+		}
+	}
+
+	_firstConversionToTimeDuration(args) {
+		const [firstValue, secondValue] = args;
+		const fistValueType = typeof firstValue;
+		if (fistValueType === 'string' && args.length === 1 &&
+			firstValue.includes(TIME_SEPARATOR)) {
+			const timeObj = _stringToObject(firstValue);
+			this.time = _objectToNumber(timeObj);
 
 		} else if (fistValueType === 'object' && args.length === 1) {
 			this.time = _objectToNumber(firstValue);
@@ -107,19 +109,21 @@ export default class TimeDuration {
 
 	_normalize(timeUnknown) {
 		const isTimeDuration = !(timeUnknown instanceof this.constructor);
-		return isTimeDuration ? new this.constructor(timeUnknown) : timeUnknown;
+		const normalizedTD = isTimeDuration ?
+			new this.constructor(timeUnknown) : timeUnknown;
+		return normalizedTD.toMinutes();
 	}
 
 	/* Modification operations */
 
 	add(timeToAdd) {
 		const timeToAddNormalized = this._normalize(timeToAdd);
-		this.time = this.time + timeToAddNormalized.toMinutes();
+		this.time = this.time + timeToAddNormalized;
 	}
 
 	subtract(timeToSubtract) {
 		const timeToAddNormalized = this._normalize(timeToSubtract);
-		this.time = this.time - timeToAddNormalized.toMinutes();
+		this.time = this.time - timeToAddNormalized;
 	}
 
 	multiply(multiplicationFactor) {
