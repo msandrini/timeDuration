@@ -2,11 +2,12 @@ sudo: false
 language: node_js  
 os: linux
 
+cache:
+  directories:
+    - "node_modules"
+
 env:
   - CI=true
-
-node_js:
-  - "lts/*"
 
 script:
   - npm test
