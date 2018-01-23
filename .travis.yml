@@ -1,0 +1,14 @@
+sudo: false
+language: node_js  
+os: linux
+
+cache:
+  directories:
+    - "node_modules"
+
+env:
+  - CI=true
+
+script:
+  - npm test
+  - bash <(curl -s https://codecov.io/bash) || echo 'Codecov failed to upload'
