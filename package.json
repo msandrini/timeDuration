@@ -3,7 +3,12 @@
   "version": "0.1.0",
   "description": "Library to handle simple hour/minute times",
   "main": "index.js",
+  "precommit": [
+    "lint",
+    "test"
+  ],
   "scripts": {
+    "pretest": "npm run lint",
     "test": "jest",
     "lint": "eslint ./index.js"
   },
@@ -17,7 +22,10 @@
     "hours",
     "minutes"
   ],
-  "author": "Marcos Sandrini <msandrinidesign@gmail.com>",
+  "author": {
+    "name": "Marcos Sandrini",
+    "email": "msandrinidesign@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/msandrini/timeDuration/issues"
@@ -33,6 +41,7 @@
     "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "jest": "^22.1.4"
+    "jest": "^22.1.4",
+    "pre-commit": "^1.2.2"
   }
 }
