@@ -2,11 +2,140 @@ import TimeDuration from './index';
 
 /* globals describe, it, expect */
 
-describe('SimpleTime', () => {
+describe('TimeDuration', () => {
 
 	it('the class should be instantiated', () => {
 		const td = new TimeDuration();
 		expect(typeof td === 'object').toBeTruthy();
+	});
+
+	describe('constructor', () => {
+		it('should accept an empty arg', () => {
+			const td = new TimeDuration();
+			expect(td.time).toBe(0);
+		});
+		it('should accept a number as minutes at input', () => {
+			const td = new TimeDuration(102);
+			expect(td.time).toBe(102);
+		});
+		it('should accept string as HH:MM at input', () => {
+			const td1 = new TimeDuration('1:42');
+			expect(td1.time).toBe(102);
+			const td2 = new TimeDuration('01:1');
+			expect(td2.time).toBe(61);
+		});
+		it('should accept an obj {hours,minutes} at input', () => {
+			const td = new TimeDuration({ hours: 1, minutes: 42 });
+			expect(td.time).toBe(102);
+		});
+		it('should accept 2 numbers as (H, m) at input', () => {
+			const td = new TimeDuration(1, 42);
+			expect(td.time).toBe(102);
+		});
+		it('should return error on invalid string', () => {
+			expect(() => (new TimeDuration('hours:minutes'))).toThrowError();
+		});
+		it('should error on invalid number on object', () => {
+			expect(() => (new TimeDuration({ hours: 'blabla', minutes: 10 }))).toThrowError();
+		});
+	});
+
+	describe('conversion', () => {
+		const td = new TimeDuration(102);
+		it('should evaluate duration as minutes', () => {
+			expect(td.valueOf()).toBe(102);
+		});
+		it('should return time as minutes', () => {
+			expect(td.toMinutes()).toBe(102);
+		});
+		describe('should return time as hours', () => {
+			const td130 = new TimeDuration(130);
+			const td60 = new TimeDuration(60);
+			it('without any parameter', () => {
+				expect(td130.toHours()).toBe(2.17);
+				expect(td60.toHours()).toBe(1);
+			});
+			it('withouth decimals', () => {
+				expect(td130.toHours(0)).toBe(2);
+				expect(td60.toHours(0)).toBe(1);
+			});
+		});
+		it('should return time as object {hours, minutes}', () => {
+			expect(td.toObject()).toEqual({ hours: 1, minutes: 42 });
+		});
+		describe('should return time as string HH:MM', () => {
+			it('with minutes lower than 10', () => {
+				const td2 = new TimeDuration(62);
+				expect(td2.toString()).toBe('1:02');
+			});
+			it('with minutes grather than 10', () => {
+				expect(td.toString()).toBe('1:42');
+			});
+			it('without any parameter', () => {
+				expect(td.toString(true)).toBe('01:42');
+			});
+		});
+	});
+
+	describe('getters and setters', () => {
+		const td = new TimeDuration(80);
+		describe('get', () => {
+			it('hours should return hours', () => {
+				expect(td.hours).toBe(1);
+			});
+			it('minutes should return minutes', () => {
+				expect(td.minutes).toBe(20);
+			});
+		});
+		describe('set', () => {
+			it('hours should change only hours', () => {
+				td.hours = 2;
+				expect(td.toString()).toBe('2:20');
+			});
+			it('minutes should change only minutes', () => {
+				td.minutes = 2;
+				expect(td.toString()).toBe('2:02');
+			});
+		});
+	});
+
+	describe('_normalize', () => {
+		const td = new TimeDuration();
+		it('should create a new TimeDuration', () => {
+			expect(td._normalize(102) instanceof TimeDuration).toBeTruthy();
+		});
+		it('should return given TimeDuration', () => {
+			const td2 = new TimeDuration();
+			expect(td._normalize(td2)).toBe(td2);
+		});
+	});
+
+	describe('operations', () => {
+		it('sum should sum two times', () => {
+			const td = new TimeDuration('21:21');
+			td.add('01:00');
+			expect(td.toMinutes()).toBe(1341);
+		});
+		it('subtract should subtract two times', () => {
+			const td = new TimeDuration(102);
+			const td2 = new TimeDuration(1, 0);
+			td.subtract(td2);
+			expect(td.toMinutes()).toBe(42);
+			td.subtract(td2);
+			expect(td.toMinutes()).toBe(-18); // idrk if this is the expected value.
+		});
+		it('multiplication should multply timeDuration for a constant', () => {
+			const td = new TimeDuration(60);
+			td.multiply(3);
+			expect(td.toMinutes()).toBe(180);
+		});
+		it('division should divide timeDuration for a constant', () => {
+			const td = new TimeDuration(180);
+			td.divide(3);
+			expect(td.toMinutes()).toBe(60);
+			td.divide(7);
+			expect(td.toMinutes()).toBe(9);
+		});
 	});
 
 });

@@ -77,7 +77,7 @@ export default class TimeDuration {
 	}
 
 	toString(hoursWithZero = false) {
-		const { hours, minutes } = this.toObject;
+		const { hours, minutes } = this.toObject();
 		const minutesZeroed = minutes < 10 ? `0${minutes}` : minutes;
 		const hoursZeroed = hours < 10 && hoursWithZero ? `0${hours}` : hours;
 		return `${hoursZeroed}:${minutesZeroed}`;
@@ -107,7 +107,7 @@ export default class TimeDuration {
 
 	_normalize(timeUnknown) {
 		const isTimeDuration = !(timeUnknown instanceof this.constructor);
-		return isTimeDuration ? new [this.constructor](timeUnknown) : timeUnknown;
+		return isTimeDuration ? new this.constructor(timeUnknown) : timeUnknown;
 	}
 
 	/* Modification operations */
