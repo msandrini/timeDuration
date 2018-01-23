@@ -38,8 +38,7 @@ console.log(td.toObject()); // outputs an object { hours: 2, minutes: 30 }
 ```
 
 The processing functions built out of the box:
-_(On *add* and *subtract* the parameter will be converted to a TimeDuration)_
-_(On *multiply* and *divide* the parameter will be the multiplication/division factor)_
+_(On *add* and *subtract* the parameter will be converted to a TimeDuration, whereas on *multiplyBy* and *divideBy* the parameter will be the multiplication/division factor)_
 
 ```javascript
 const td = new TimeDuration(2, 30);
@@ -48,8 +47,8 @@ console.log(td.add(10)); // outputs "2:40"
 console.log(td.add('1:00')); // outputs "3:30"
 console.log(td.subtract(1, 0)); // outputs "1:30"
 console.log(td.subtract({ hours: 0, minutes: 20 })); // outputs "2:10"
-console.log(td.multiply(3)); // outputs "7:30"
-console.log(td.divide(2)); // outputs "1:15"
+console.log(td.multiplyBy(3)); // outputs "7:30"
+console.log(td.divideBy(2)); // outputs "1:15"
 ```
 
 Alternatively, we can do mathematical operations with TimeDurations

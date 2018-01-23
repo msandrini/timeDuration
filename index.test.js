@@ -124,16 +124,16 @@ describe('TimeDuration', () => {
 			td.subtract(td2);
 			expect(td.toMinutes()).toBe(-18); // idrk if this is the expected value.
 		});
-		it('multiplication should multply timeDuration for a constant', () => {
+		it('multiplyBy should multply timeDuration by a value', () => {
 			const td = new TimeDuration(60);
-			td.multiply(3);
+			td.multiplyBy(3);
 			expect(td.toMinutes()).toBe(180);
 		});
-		it('division should divide timeDuration for a constant', () => {
+		it('divideBy should divide timeDuration by a value', () => {
 			const td = new TimeDuration(180);
-			td.divide(3);
+			td.divideBy(3);
 			expect(td.toMinutes()).toBe(60);
-			td.divide(7);
+			td.divideBy(7);
 			expect(td.toMinutes()).toBe(9);
 		});
 	});

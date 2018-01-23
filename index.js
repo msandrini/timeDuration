@@ -126,11 +126,11 @@ export default class TimeDuration {
 		this.time = this.time - timeToAddNormalized;
 	}
 
-	multiply(multiplicationFactor) {
+	multiplyBy(multiplicationFactor) {
 		this.time = this.time * multiplicationFactor;
 	}
 
-	divide(divisionFactor) {
+	divideBy(divisionFactor) {
 		this.time = Math.round(this.time / divisionFactor);
 	}
 
