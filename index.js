@@ -76,14 +76,16 @@ export default class TimeDuration {
 	}
 
 	toObject() {
-		const hours = Math.floor(this._minutes / MINUTES_PER_HOUR);
+		const roundFn = this._minutes > 0 ? Math.floor : Math.ceil;
+		const hours = roundFn(this._minutes / MINUTES_PER_HOUR);
 		const minutes = this._minutes % MINUTES_PER_HOUR;
 		return { hours, minutes };
 	}
 
 	toString(hoursWithZero = false) {
 		const { hours, minutes } = this.toObject();
-		const minutesZeroed = minutes < 10 ? `0${minutes}` : minutes;
+		const absMinutes = Math.abs(minutes);
+		const minutesZeroed = absMinutes < 10 ? `0${absMinutes}` : absMinutes;
 		const hoursZeroed = hours < 10 && hoursWithZero ? `0${hours}` : hours;
 		return `${hoursZeroed}:${minutesZeroed}`;
 	}

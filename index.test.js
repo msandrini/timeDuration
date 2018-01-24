@@ -18,6 +18,10 @@ describe('TimeDuration', () => {
 			const td = new TimeDuration(102);
 			expect(td._minutes).toBe(102);
 		});
+		it('should accept a negative number as minutes at input', () => {
+			const td = new TimeDuration(-102);
+			expect(td._minutes).toBe(-102);
+		});
 		it('should accept a TimeDuration at input', () => {
 			const td = new TimeDuration(new TimeDuration(102));
 			expect(td._minutes).toBe(102);
@@ -64,8 +68,14 @@ describe('TimeDuration', () => {
 				expect(td60.toHours(0)).toBe(1);
 			});
 		});
-		it('should return time as object {hours, minutes}', () => {
-			expect(td.toObject()).toEqual({ hours: 1, minutes: 42 });
+		describe('should return time as object {hours, minutes}', () => {
+			it('for normal positive time', () => {
+				expect(td.toObject()).toEqual({ hours: 1, minutes: 42 });
+			});
+			it('for negative time', () => {
+				const tdNegative = new TimeDuration(-62);
+				expect(tdNegative.toObject()).toEqual({ hours: -1, minutes: -2 });
+			});
 		});
 		describe('should return time as string HH:MM', () => {
 			it('with minutes lower than 10', () => {
@@ -74,6 +84,10 @@ describe('TimeDuration', () => {
 			});
 			it('with minutes grather than 10', () => {
 				expect(td.toString()).toBe('1:42');
+			});
+			it('with negative value for time', () => {
+				const td2 = new TimeDuration(-62);
+				expect(td2.toString()).toBe('-1:02');
 			});
 			it('without any parameter', () => {
 				expect(td.toString(true)).toBe('01:42');
