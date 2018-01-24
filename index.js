@@ -24,15 +24,15 @@ const _stringToObject = (str, separator = TIME_SEPARATOR) => {
 export default class TimeDuration {
 
 	constructor(...args) {
-		this.time = 0;
+		this._minutes = 0;
 
 		const [firstValue] = args;
 
 		if (typeof firstValue === 'number' && args.length === 1) {
-			this.time = firstValue;
+			this._minutes = firstValue;
 
 		} else if (firstValue instanceof TimeDuration) {
-			this.time = firstValue.valueOf();
+			this._minutes = firstValue.valueOf();
 
 		} else {
 			this._firstConversionToTimeDuration(args);
@@ -45,14 +45,14 @@ export default class TimeDuration {
 		if (fistValueType === 'string' && args.length === 1 &&
 			firstValue.includes(TIME_SEPARATOR)) {
 			const timeObj = _stringToObject(firstValue);
-			this.time = _objectToNumber(timeObj);
+			this._minutes = _objectToNumber(timeObj);
 
 		} else if (fistValueType === 'object' && args.length === 1) {
-			this.time = _objectToNumber(firstValue);
+			this._minutes = _objectToNumber(firstValue);
 
 		} else if (args.length === 2 && fistValueType === 'number' &&
 			typeof secondValue === 'number') {
-			this.time = _objectToNumber({
+			this._minutes = _objectToNumber({
 				hours: firstValue,
 				minutes: secondValue
 			});
@@ -62,22 +62,22 @@ export default class TimeDuration {
 	/* Conversion operations (output) */
 
 	toMinutes() {
-		return this.time;
+		return this._minutes;
 	}
 
 	valueOf() {
-		return this.time;
+		return this._minutes;
 	}
 
 	toHours(roundDigits = 2) {
-		const hours = this.time / MINUTES_PER_HOUR;
+		const hours = this._minutes / MINUTES_PER_HOUR;
 		const factor = 10 ** roundDigits;
 		return Math.round(hours * factor) / factor;
 	}
 
 	toObject() {
-		const hours = Math.floor(this.time / MINUTES_PER_HOUR);
-		const minutes = this.time % MINUTES_PER_HOUR;
+		const hours = Math.floor(this._minutes / MINUTES_PER_HOUR);
+		const minutes = this._minutes % MINUTES_PER_HOUR;
 		return { hours, minutes };
 	}
 
@@ -99,35 +99,35 @@ export default class TimeDuration {
 	}
 
 	set hours(hours) {
-		const minutes = this.time % MINUTES_PER_HOUR;
-		this.time = (hours * MINUTES_PER_HOUR) + minutes;
+		const minutes = this._minutes % MINUTES_PER_HOUR;
+		this._minutes = (hours * MINUTES_PER_HOUR) + minutes;
 	}
 
 	set minutes(minutes) {
-		const hours = Math.floor(this.time / MINUTES_PER_HOUR);
-		this.time = (hours * MINUTES_PER_HOUR) + minutes;
+		const hours = Math.floor(this._minutes / MINUTES_PER_HOUR);
+		this._minutes = (hours * MINUTES_PER_HOUR) + minutes;
 	}
 
 	/* Modification operations */
 	add(timeToAdd) {
 		const timeToAddNormalized = new TimeDuration(timeToAdd);
-		this.time = this.time + timeToAddNormalized;
+		this._minutes = this._minutes + timeToAddNormalized;
 		return this;
 	}
 
 	subtract(timeToSubtract) {
 		const timeToAddNormalized = new TimeDuration(timeToSubtract);
-		this.time = this.time - timeToAddNormalized;
+		this._minutes = this._minutes - timeToAddNormalized;
 		return this;
 	}
 
 	multiplyBy(multiplicationFactor) {
-		this.time = this.time * multiplicationFactor;
+		this._minutes = this._minutes * multiplicationFactor;
 		return this;
 	}
 
 	divideBy(divisionFactor) {
-		this.time = Math.round(this.time / divisionFactor);
+		this._minutes = Math.round(this._minutes / divisionFactor);
 		return this;
 	}
 
