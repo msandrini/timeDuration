@@ -12,29 +12,29 @@ describe('TimeDuration', () => {
 	describe('constructor', () => {
 		it('should accept an empty arg', () => {
 			const td = new TimeDuration();
-			expect(td.time).toBe(0);
+			expect(td._minutes).toBe(0);
 		});
 		it('should accept a number as minutes at input', () => {
 			const td = new TimeDuration(102);
-			expect(td.time).toBe(102);
+			expect(td._minutes).toBe(102);
 		});
 		it('should accept a TimeDuration at input', () => {
 			const td = new TimeDuration(new TimeDuration(102));
-			expect(td.time).toBe(102);
+			expect(td._minutes).toBe(102);
 		});
 		it('should accept string as HH:MM at input', () => {
 			const td1 = new TimeDuration('1:42');
-			expect(td1.time).toBe(102);
+			expect(td1._minutes).toBe(102);
 			const td2 = new TimeDuration('01:1');
-			expect(td2.time).toBe(61);
+			expect(td2._minutes).toBe(61);
 		});
 		it('should accept an obj {hours,minutes} at input', () => {
 			const td = new TimeDuration({ hours: 1, minutes: 42 });
-			expect(td.time).toBe(102);
+			expect(td._minutes).toBe(102);
 		});
 		it('should accept 2 numbers as (H, m) at input', () => {
 			const td = new TimeDuration(1, 42);
-			expect(td.time).toBe(102);
+			expect(td._minutes).toBe(102);
 		});
 		it('should return error on invalid string', () => {
 			expect(() => (new TimeDuration('hours:minutes'))).toThrowError();
@@ -110,7 +110,7 @@ describe('TimeDuration', () => {
 				td.add('01:00');
 				expect(td.toMinutes()).toBe(1341);
 			});
-			it('should return the new value of the object as minutes', () => {
+			it('should return the object', () => {
 				const td = new TimeDuration('21:21');
 				expect(td.add('01:00')).toEqual(td);
 			});
@@ -124,7 +124,7 @@ describe('TimeDuration', () => {
 				td.subtract(td2);
 				expect(td.toMinutes()).toBe(-18); // idrk if this is the expected value.
 			});
-			it('should return the new value of the object as minutes', () => {
+			it('should return the object', () => {
 				const td = new TimeDuration(102);
 				const td2 = new TimeDuration(1, 0);
 				expect(td.subtract(td2)).toEqual(td);
