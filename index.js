@@ -31,6 +31,9 @@ export default class TimeDuration {
 		if (typeof firstValue === 'number' && args.length === 1) {
 			this.time = firstValue;
 
+		} else if (firstValue instanceof TimeDuration) {
+			this.time = firstValue.valueOf();
+
 		} else {
 			this._firstConversionToTimeDuration(args);
 		}
@@ -105,33 +108,27 @@ export default class TimeDuration {
 		this.time = (hours * MINUTES_PER_HOUR) + minutes;
 	}
 
-	/* Internal helper */
-
-	_normalize(timeUnknown) {
-		const isTimeDuration = !(timeUnknown instanceof this.constructor);
-		const normalizedTD = isTimeDuration ?
-			new this.constructor(timeUnknown) : timeUnknown;
-		return normalizedTD.toMinutes();
-	}
-
 	/* Modification operations */
-
 	add(timeToAdd) {
-		const timeToAddNormalized = this._normalize(timeToAdd);
+		const timeToAddNormalized = new TimeDuration(timeToAdd);
 		this.time = this.time + timeToAddNormalized;
+		return this;
 	}
 
 	subtract(timeToSubtract) {
-		const timeToAddNormalized = this._normalize(timeToSubtract);
+		const timeToAddNormalized = new TimeDuration(timeToSubtract);
 		this.time = this.time - timeToAddNormalized;
+		return this;
 	}
 
 	multiplyBy(multiplicationFactor) {
 		this.time = this.time * multiplicationFactor;
+		return this;
 	}
 
 	divideBy(divisionFactor) {
 		this.time = Math.round(this.time / divisionFactor);
+		return this;
 	}
 
 }
