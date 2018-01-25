@@ -8,7 +8,7 @@ const _objectToNumber = (obj) => {
 	if (_isValidNumber(obj.hours) && _isValidNumber(obj.minutes)) {
 		const absMinute = (Math.abs(Number(obj.hours)) * MINUTES_PER_HOUR)
 			+ Math.abs(Number(obj.minutes));
-		if (Object.is(obj.hours, -0) || obj.hours < 0) {
+		if (Object.is(Number(obj.hours), -0) || Number(obj.hours) < 0) {
 			return -absMinute;
 		}
 		return absMinute;
@@ -17,7 +17,7 @@ const _objectToNumber = (obj) => {
 };
 
 const _stringToObject = (str, separator = TIME_SEPARATOR) => {
-	const [hours, minutes] = str.split(separator);
+	const [hours, minutes] = str.split(' ').join('').split(separator);
 	if (_isValidNumber(hours) && _isValidNumber(minutes)) {
 		return {
 			hours: Number(hours),
