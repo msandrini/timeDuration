@@ -31,14 +31,18 @@ describe('TimeDuration', () => {
 			expect(td1._minutes).toBe(102);
 			const td2 = new TimeDuration('01:1');
 			expect(td2._minutes).toBe(61);
+			const td3 = new TimeDuration('-10:30');
+			expect(td3._minutes).toBe(-630);
+			const td4 = new TimeDuration('-00:30');
+			expect(td4._minutes).toBe(-30);
 		});
 		it('should accept an obj {hours,minutes} at input', () => {
 			const td = new TimeDuration({ hours: 1, minutes: 42 });
 			expect(td._minutes).toBe(102);
-		});
-		it('should accept an obj {"hours","minutes"} at input', () => {
-			const td = new TimeDuration({ hours: '1', minutes: '42' });
-			expect(td._minutes).toBe(102);
+			const td2 = new TimeDuration({ hours: '1', minutes: '42' });
+			expect(td2._minutes).toBe(102);
+			const td3 = new TimeDuration({ hours: -0, minutes: 10 });
+			expect(td3._minutes).toBe(-10);
 		});
 		it('should accept 2 numbers as (H, m) at input', () => {
 			const td = new TimeDuration(1, 42);
