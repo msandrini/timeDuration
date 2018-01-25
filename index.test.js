@@ -18,6 +18,10 @@ describe('TimeDuration', () => {
 			const td = new TimeDuration(102);
 			expect(td._minutes).toBe(102);
 		});
+		it('should accept a negative number as minutes at input', () => {
+			const td = new TimeDuration(-102);
+			expect(td._minutes).toBe(-102);
+		});
 		it('should accept a TimeDuration at input', () => {
 			const td = new TimeDuration(new TimeDuration(102));
 			expect(td._minutes).toBe(102);
@@ -39,6 +43,12 @@ describe('TimeDuration', () => {
 		it('should accept 2 numbers as (H, m) at input', () => {
 			const td = new TimeDuration(1, 42);
 			expect(td._minutes).toBe(102);
+		});
+		it('should accept 2 Date objects at input - and get the difference', () => {
+			const date1 = new Date(2018, 0, 1, 12, 45, 54, 1234);
+			const date2 = new Date(2018, 0, 1, 14, 20, 15, 8576);
+			const td = new TimeDuration(date1, date2);
+			expect(td._minutes).toBe(94);
 		});
 		it('should return error on invalid string', () => {
 			expect(() => (new TimeDuration('hours:minutes'))).toThrowError();
@@ -68,8 +78,14 @@ describe('TimeDuration', () => {
 				expect(td60.toHours(0)).toBe(1);
 			});
 		});
-		it('should return time as object {hours, minutes}', () => {
-			expect(td.toObject()).toEqual({ hours: 1, minutes: 42 });
+		describe('should return time as object {hours, minutes}', () => {
+			it('for normal positive time', () => {
+				expect(td.toObject()).toEqual({ hours: 1, minutes: 42 });
+			});
+			it('for negative time', () => {
+				const tdNegative = new TimeDuration(-62);
+				expect(tdNegative.toObject()).toEqual({ hours: -1, minutes: -2 });
+			});
 		});
 		describe('should return time as string HH:MM', () => {
 			it('with minutes lower than 10', () => {
@@ -78,6 +94,10 @@ describe('TimeDuration', () => {
 			});
 			it('with minutes grather than 10', () => {
 				expect(td.toString()).toBe('1:42');
+			});
+			it('with negative value for time', () => {
+				const td2 = new TimeDuration(-62);
+				expect(td2.toString()).toBe('-1:02');
 			});
 			it('without any parameter', () => {
 				expect(td.toString(true)).toBe('01:42');
