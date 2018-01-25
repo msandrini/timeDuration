@@ -5,7 +5,7 @@ const _isValidNumber = number => !Number.isNaN(Number(number));
 
 const _objectToNumber = (obj) => {
 	if (_isValidNumber(obj.hours) && _isValidNumber(obj.minutes)) {
-		return (obj.hours * MINUTES_PER_HOUR) + obj.minutes;
+		return (Number(obj.hours) * MINUTES_PER_HOUR) + Number(obj.minutes);
 	}
 	throw new Error(`Cannot convert object ${JSON.stringify(obj)} to TimeDuration`);
 };
