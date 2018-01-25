@@ -17,7 +17,7 @@ const _objectToNumber = (obj) => {
 };
 
 const _stringToObject = (str, separator = TIME_SEPARATOR) => {
-	const [hours, minutes] = str.replace(' ', '').split(separator);
+	const [hours, minutes] = str.split(' ').join('').split(separator);
 	if (_isValidNumber(hours) && _isValidNumber(minutes)) {
 		return {
 			hours: Number(hours),
