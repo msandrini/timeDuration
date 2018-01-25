@@ -40,6 +40,12 @@ describe('TimeDuration', () => {
 			const td = new TimeDuration(1, 42);
 			expect(td._minutes).toBe(102);
 		});
+		it('should accept 2 Date objects at input - and get the difference', () => {
+			const date1 = new Date(2018, 0, 1, 12, 45, 54, 1234);
+			const date2 = new Date(2018, 0, 1, 14, 20, 15, 8576);
+			const td = new TimeDuration(date1, date2);
+			expect(td._minutes).toBe(94);
+		});
 		it('should return error on invalid string', () => {
 			expect(() => (new TimeDuration('hours:minutes'))).toThrowError();
 		});

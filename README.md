@@ -8,7 +8,7 @@
 [![npm version](https://badge.fury.io/js/time-duration.svg)](https://badge.fury.io/js/time-duration)
 
 
-Library to handle simple hour/minute times
+Library to handle simple hour/minute times, with *minutes* as basic units.
 
 ## installation
 
@@ -17,13 +17,21 @@ Library to handle simple hour/minute times
 
 ## usage
 
-This lib is based on an instantiable class, to deal with time in the scope of minutes and hours. It supports time to be supplied to it in 4 ways:
+This lib is based on an instantiable class, to deal with time in the scope of minutes and hours. It supports time to be supplied to it in 4 basic ways:
 
 ```javascript
 const td = new TimeDuration('2:30'); // string with hours and minutes
 const td = new TimeDuration({ hours: 2, minutes: 30 }); // object
 const td = new TimeDuration(2, 30); // two parameters: hours, minutes
 const td = new TimeDuration(210); // number of minutes
+```
+
+Also, time can be supplied as a difference between two native `Date` objects (in this case it will calculate the minutes not with `getMinutes()` but based on both milliseconds):
+
+```javascript
+const date1 = new Date(2018, 0, 1, 12, 45, 54);
+const date2 = new Date(2018, 0, 1, 14, 20, 15);
+const td = new TimeDuration(date1, date2);
 ```
 
 With this class instantiated, one can process time calculations with minutes and hours and output it as a number of formats. The formats are as follows:
@@ -52,7 +60,7 @@ console.log(td.multiplyBy(3)); // outputs "7:30"
 console.log(td.divideBy(2)); // outputs "1:15"
 ```
 
-Alternatively, we can do mathematical operations with TimeDurations
+Alternatively, one can do mathematical operations with TimeDurations:
 
 ```javascript
 const td1 = new TimeDuration(1, 20);
@@ -61,14 +69,9 @@ console.log(td1 + td2); // outputs 140 (integer)
 console.log(new TimeDuration(td1 - td2)); // outputs "0:20"
 ```
 
-## Linting only
-
-```
-npm run lint
-```
-
-## Testing
+## testing and linting
 
 ```
 npm test
 ```
+Tests include linting, but when only the linting is desired the command `npm run lint` can be run.

@@ -1,4 +1,5 @@
 const MINUTES_PER_HOUR = 60;
+const MILLISECONDS_PER_MINUTE = 60 * 1000;
 const TIME_SEPARATOR = ':';
 
 const _isValidNumber = number => !Number.isNaN(Number(number));
@@ -26,7 +27,7 @@ export default class TimeDuration {
 	constructor(...args) {
 		this._minutes = 0;
 
-		const [firstValue] = args;
+		const [firstValue, secondValue] = args;
 
 		if (typeof firstValue === 'number' && args.length === 1) {
 			this._minutes = firstValue;
@@ -34,23 +35,30 @@ export default class TimeDuration {
 		} else if (firstValue instanceof TimeDuration) {
 			this._minutes = firstValue.valueOf();
 
+		} else if (firstValue instanceof Date && secondValue instanceof Date) {
+			this._firstConversionFromDateDiff(firstValue, secondValue);
+
 		} else {
-			this._firstConversionToTimeDuration(args);
+			this._firstConversionFromCommonFormats(firstValue, secondValue, args.length);
 		}
 	}
 
-	_firstConversionToTimeDuration(args) {
-		const [firstValue, secondValue] = args;
+	_firstConversionFromDateDiff(firstValue, secondValue) {
+		const milisecondsDiff = Math.abs(firstValue - secondValue);
+		this._minutes = Math.round(milisecondsDiff / MILLISECONDS_PER_MINUTE);
+	}
+
+	_firstConversionFromCommonFormats(firstValue, secondValue, argsLength) {
 		const fistValueType = typeof firstValue;
-		if (fistValueType === 'string' && args.length === 1 &&
+		if (fistValueType === 'string' && argsLength === 1 &&
 			firstValue.includes(TIME_SEPARATOR)) {
 			const timeObj = _stringToObject(firstValue);
 			this._minutes = _objectToNumber(timeObj);
 
-		} else if (fistValueType === 'object' && args.length === 1) {
+		} else if (fistValueType === 'object' && argsLength === 1) {
 			this._minutes = _objectToNumber(firstValue);
 
-		} else if (args.length === 2 && fistValueType === 'number' &&
+		} else if (argsLength === 2 && fistValueType === 'number' &&
 			typeof secondValue === 'number') {
 			this._minutes = _objectToNumber({
 				hours: firstValue,
@@ -111,6 +119,7 @@ export default class TimeDuration {
 	}
 
 	/* Modification operations */
+
 	add(timeToAdd) {
 		const timeToAddNormalized = new TimeDuration(timeToAdd);
 		this._minutes = this._minutes + timeToAddNormalized;
