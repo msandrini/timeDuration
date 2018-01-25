@@ -35,6 +35,8 @@ describe('TimeDuration', () => {
 			expect(td3._minutes).toBe(-630);
 			const td4 = new TimeDuration('-00:30');
 			expect(td4._minutes).toBe(-30);
+			const td5 = new TimeDuration('- 1:30');
+			expect(td5._minutes).toBe(-90);
 		});
 		it('should accept an obj {hours,minutes} at input', () => {
 			const td = new TimeDuration({ hours: 1, minutes: 42 });
@@ -43,6 +45,8 @@ describe('TimeDuration', () => {
 			expect(td2._minutes).toBe(102);
 			const td3 = new TimeDuration({ hours: -0, minutes: 10 });
 			expect(td3._minutes).toBe(-10);
+			const td4 = new TimeDuration({ hours: '-0', minutes: 10 });
+			expect(td4._minutes).toBe(-10);
 		});
 		it('should accept 2 numbers as (H, m) at input', () => {
 			const td = new TimeDuration(1, 42);
