@@ -35,14 +35,26 @@ describe('TimeDuration', () => {
 			expect(td3._minutes).toBe(-630);
 			const td4 = new TimeDuration('-00:30');
 			expect(td4._minutes).toBe(-30);
+			const td5 = new TimeDuration('- 1:30');
+			expect(td5._minutes).toBe(-90);
+			const td6 = new TimeDuration('');
+			expect(td6._minutes).toBe(0);
 		});
 		it('should accept an obj {hours,minutes} at input', () => {
-			const td = new TimeDuration({ hours: 1, minutes: 42 });
-			expect(td._minutes).toBe(102);
-			const td2 = new TimeDuration({ hours: '1', minutes: '42' });
+			const td1 = new TimeDuration({});
+			expect(td1._minutes).toBe(0);
+			const td2 = new TimeDuration({ hours: 1, minutes: 42 });
 			expect(td2._minutes).toBe(102);
-			const td3 = new TimeDuration({ hours: -0, minutes: 10 });
-			expect(td3._minutes).toBe(-10);
+			const td3 = new TimeDuration({ hours: '1', minutes: '42' });
+			expect(td3._minutes).toBe(102);
+			const td4 = new TimeDuration({ hours: -0, minutes: 10 });
+			expect(td4._minutes).toBe(-10);
+			const td5 = new TimeDuration({ hours: '-0', minutes: 10 });
+			expect(td5._minutes).toBe(-10);
+			const td6 = new TimeDuration({ hours: 1 });
+			expect(td6._minutes).toBe(60);
+			const td7 = new TimeDuration({ minutes: 60 });
+			expect(td7._minutes).toBe(60);
 		});
 		it('should accept 2 numbers as (H, m) at input', () => {
 			const td = new TimeDuration(1, 42);

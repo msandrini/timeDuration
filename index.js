@@ -5,10 +5,16 @@ const TIME_SEPARATOR = ':';
 const _isValidNumber = number => !Number.isNaN(Number(number));
 
 const _objectToNumber = (obj) => {
-	if (_isValidNumber(obj.hours) && _isValidNumber(obj.minutes)) {
-		const absMinute = (Math.abs(Number(obj.hours)) * MINUTES_PER_HOUR)
-			+ Math.abs(Number(obj.minutes));
-		if (Object.is(obj.hours, -0) || obj.hours < 0) {
+	const hours = Object.prototype.hasOwnProperty.call(obj, 'hours') ?
+		obj.hours : 0;
+	const minutes = Object.prototype.hasOwnProperty.call(obj, 'minutes') ?
+		obj.minutes : 0;
+
+	if (_isValidNumber(hours) && _isValidNumber(minutes)) {
+		const absMinute = (
+			(Math.abs(Number(hours)) * MINUTES_PER_HOUR) + Math.abs(Number(minutes))
+		);
+		if (Object.is(Number(hours), -0) || Number(hours) < 0) {
 			return -absMinute;
 		}
 		return absMinute;
@@ -17,7 +23,7 @@ const _objectToNumber = (obj) => {
 };
 
 const _stringToObject = (str, separator = TIME_SEPARATOR) => {
-	const [hours, minutes] = str.split(separator);
+	const [hours, minutes] = str.split(' ').join('').split(separator);
 	if (_isValidNumber(hours) && _isValidNumber(minutes)) {
 		return {
 			hours: Number(hours),
