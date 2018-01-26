@@ -4,6 +4,8 @@ const TIME_SEPARATOR = ':';
 
 const _isValidNumber = number => !Number.isNaN(Number(number));
 
+const _isEmptyObject = obj => (Object.keys(obj).length === 0);
+
 const _objectToNumber = (obj) => {
 	if (_isValidNumber(obj.hours) && _isValidNumber(obj.minutes)) {
 		const absMinute = (Math.abs(Number(obj.hours)) * MINUTES_PER_HOUR)
@@ -12,6 +14,8 @@ const _objectToNumber = (obj) => {
 			return -absMinute;
 		}
 		return absMinute;
+	} else if (_isEmptyObject(obj)) {
+		return 0;
 	}
 	throw new Error(`Cannot convert object ${JSON.stringify(obj)} to TimeDuration`);
 };
