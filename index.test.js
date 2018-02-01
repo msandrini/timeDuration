@@ -55,6 +55,8 @@ describe('TimeDuration', () => {
 			expect(td6._minutes).toBe(60);
 			const td7 = new TimeDuration({ minutes: 60 });
 			expect(td7._minutes).toBe(60);
+			const td8 = new TimeDuration({ hours: 2, minutes: undefined });
+			expect(td8._minutes).toBe(120);
 		});
 		it('should accept 2 numbers as (H, m) at input', () => {
 			const td = new TimeDuration(1, 42);

@@ -3,12 +3,12 @@ const MILLISECONDS_PER_MINUTE = 60 * 1000;
 const TIME_SEPARATOR = ':';
 
 const _isValidNumber = number => !Number.isNaN(Number(number));
+const _isValidObjectValue = (obj, key) =>
+	Object.prototype.hasOwnProperty.call(obj, key) && (typeof obj[key] !== 'undefined');
 
 const _objectToNumber = (obj) => {
-	const hours = Object.prototype.hasOwnProperty.call(obj, 'hours') ?
-		obj.hours : 0;
-	const minutes = Object.prototype.hasOwnProperty.call(obj, 'minutes') ?
-		obj.minutes : 0;
+	const hours = _isValidObjectValue(obj, 'hours') ? obj.hours : 0;
+	const minutes = _isValidObjectValue(obj, 'minutes') ? obj.minutes : 0;
 
 	if (_isValidNumber(hours) && _isValidNumber(minutes)) {
 		const absMinute = (
