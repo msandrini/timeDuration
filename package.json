@@ -1,6 +1,6 @@
 {
   "name": "time-duration",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Library to handle simple hour/minute times",
   "main": "index.js",
   "precommit": [
