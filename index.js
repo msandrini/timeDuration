@@ -33,7 +33,7 @@ const _stringToObject = (str, separator = TIME_SEPARATOR) => {
 	throw new Error(`Cannot convert string "${str}" to TimeDuration`);
 };
 
-export default class TimeDuration {
+class TimeDuration {
 
 	constructor(...args) {
 		this._minutes = 0;
@@ -154,3 +154,5 @@ export default class TimeDuration {
 	}
 
 }
+
+module.exports = TimeDuration;
