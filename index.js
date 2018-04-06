@@ -33,6 +33,8 @@ const _stringToObject = (str, separator = TIME_SEPARATOR) => {
 	throw new Error(`Cannot convert string "${str}" to TimeDuration`);
 };
 
+const _isNegativeZero = x => Object.is(-0, x);
+
 class TimeDuration {
 
 	constructor(...args) {
@@ -106,7 +108,9 @@ class TimeDuration {
 		const absMinutes = Math.abs(minutes);
 		const minutesZeroed = absMinutes < 10 ? `0${absMinutes}` : absMinutes;
 		const hoursZeroed = hours < 10 && hoursWithZero ? `0${hours}` : hours;
-		return `${hoursZeroed}:${minutesZeroed}`;
+		const hoursProcessed = !hours && _isNegativeZero(hours) ?
+			`-${hoursZeroed}` : hoursZeroed;
+		return `${hoursProcessed}:${minutesZeroed}`;
 	}
 
 	/* Getters and setters */

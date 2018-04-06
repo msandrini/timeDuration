@@ -76,6 +76,10 @@ describe('TimeDuration', () => {
 		});
 	});
 
+	it('should evaluate and convert back correctly the time with "minus zero"', () => {
+		expect(new TimeDuration(-20).toString()).toEqual('-0:20');
+	});
+
 	describe('conversion', () => {
 		const td = new TimeDuration(102);
 		it('should evaluate duration as minutes', () => {
